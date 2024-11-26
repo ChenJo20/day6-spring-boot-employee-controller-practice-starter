@@ -31,9 +31,9 @@ public class CompanyControllerTest {
     private CompanyRepository companyRepository;
 
     @Autowired
-    private JacksonTester<Company> json;
+    private JacksonTester<Company> companyJacksonTester;
     @Autowired
-    private JacksonTester<List<Company>> jsonList;
+    private JacksonTester<List<Company>> companyListJacksonTester;
 
     @BeforeEach
     void setup() {
@@ -55,7 +55,7 @@ public class CompanyControllerTest {
                 .getResponse()
                 .getContentAsString();
 
-        assertThat(jsonList.parseObject(resultJson))
+        assertThat(companyListJacksonTester.parseObject(resultJson))
                 .usingRecursiveComparison()
                 .isEqualTo(expectedCompanies);
     }

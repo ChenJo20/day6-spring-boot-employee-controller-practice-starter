@@ -32,9 +32,9 @@ public class EmployeeControllerTest {
     private EmployeeRepository employeeRepository;
 
     @Autowired
-    JacksonTester<Employee> json;
+    JacksonTester<Employee> employeeJacksonTester;
     @Autowired
-    JacksonTester<List<Employee>> jsonList;
+    JacksonTester<List<Employee>> employeeListJacksonTester;
 
     @BeforeEach
     void setup() {
@@ -51,7 +51,7 @@ public class EmployeeControllerTest {
     void should_return_employees_when_get_all_given_employees() throws Exception {
         //Given
         List<Employee> expectedEmployees = employeeRepository.getEmployees();
-        String expectedJsonList = jsonList.write(expectedEmployees).getJson();
+        String expectedJsonList = employeeListJacksonTester.write(expectedEmployees).getJson();
 
         //When
         //Then
@@ -61,7 +61,7 @@ public class EmployeeControllerTest {
                 .getResponse()
                 .getContentAsString();
 
-        assertThat(jsonList.parse(resultJson).getObject())
+        assertThat(employeeListJacksonTester.parse(resultJson).getObject())
                 .usingRecursiveComparison()
                 .isEqualTo(expectedEmployees);
     }
@@ -80,7 +80,7 @@ public class EmployeeControllerTest {
                 .getResponse()
                 .getContentAsString();
 
-        assertThat(json.parseObject(resultJson)).isEqualTo(expectedEmployee);
+        assertThat(employeeJacksonTester.parseObject(resultJson)).isEqualTo(expectedEmployee);
     }
 
     @Test
@@ -88,7 +88,7 @@ public class EmployeeControllerTest {
 
         //Given
         List<Employee> expectedEmployees = employeeRepository.getEmployeesByGender(Gender.M);
-        String expectedJsonList = jsonList.write(expectedEmployees).getJson();
+        String expectedJsonList = employeeListJacksonTester.write(expectedEmployees).getJson();
 
         //When
         //Then
@@ -176,7 +176,7 @@ public class EmployeeControllerTest {
 
         //Given
         List<Employee> expectedEmployees = employeeRepository.getEmployeesByPage(2, 3);
-        String expectedJsonList = jsonList.write(expectedEmployees).getJson();
+        String expectedJsonList = employeeListJacksonTester.write(expectedEmployees).getJson();
 
         //When
         //Then
@@ -196,7 +196,7 @@ public class EmployeeControllerTest {
 
         //Given
         List<Employee> expectedEmployees = employeeRepository.getEmployeesByPage(2, 3);
-        String expectedJsonList = jsonList.write(expectedEmployees).getJson();
+        String expectedJsonList = employeeListJacksonTester.write(expectedEmployees).getJson();
 
         //When
         //Then
